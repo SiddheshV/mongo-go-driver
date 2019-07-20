@@ -118,3 +118,12 @@ func WithRegistry(fn func(*bsoncodec.Registry) *bsoncodec.Registry) ServerOption
 		return nil
 	}
 }
+
+// WithAppName sets the application name which gets sent to MongoDB when it
+// first connects.
+func WithAppNameForServer(fn func(string) string) ServerOption {
+	return func(cfg *serverConfig) error {
+		cfg.appname = fn(cfg.appname)
+		return nil
+	}
+}

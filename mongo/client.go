@@ -236,6 +236,12 @@ func (c *Client) configure(opts *options.ClientOptions) error {
 	var appName string
 	if opts.AppName != nil {
 		appName = *opts.AppName
+		connOpts = append(connOpts, topology.WithAppName(func(string) string {
+					return *opts.AppName
+				}))
+		serverOpts = append(serverOpts, topology.WithAppNameForServer(func(string) string {
+					return *opts.AppName
+				}))
 	}
 	// Compressors & ZlibLevel
 	var comps []string
